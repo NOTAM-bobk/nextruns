@@ -590,3 +590,166 @@ img { max-width: 100%; display: block; }
   padding: 12px 16px;
   margin-bottom: 20px;
 }
+
+/* ---------- Motion: scroll reveal ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal,
+  .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .sk,
+  .reading-progress__bar {
+    animation: none;
+  }
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity 0.5s cubic-bezier(0.22, 0.61, 0.36, 1),
+    transform 0.5s cubic-bezier(0.22, 0.61, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ---------- Motion: skeleton shimmer ---------- */
+
+@keyframes sk-shimmer {
+  0% { background-position: -400px 0; }
+  100% { background-position: 400px 0; }
+}
+
+.sk {
+  border-radius: 8px;
+  background: linear-gradient(
+    90deg,
+    var(--line) 25%,
+    #ece7da 50%,
+    var(--line) 75%
+  );
+  background-size: 800px 100%;
+  animation: sk-shimmer 1.4s ease-in-out infinite;
+}
+
+.sk--badge { width: 72px; height: 18px; border-radius: 999px; margin-bottom: 14px; }
+.sk--title { width: 70%; height: 20px; margin-bottom: 12px; }
+.sk--line { width: 100%; height: 12px; margin-bottom: 8px; }
+.sk--line-short { width: 55%; }
+.sk--tag { width: 90px; height: 16px; border-radius: 999px; margin-top: 6px; }
+
+.card--skeleton { pointer-events: none; }
+
+/* ---------- Motion: reading progress ---------- */
+
+.reading-progress {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 2px;
+  pointer-events: none;
+}
+
+.reading-progress__bar {
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, var(--trail), var(--trail-dark));
+  transition: width 0.08s linear;
+}
+
+/* ---------- Motion: micro-interactions ---------- */
+
+.card {
+  transition:
+    transform 0.18s cubic-bezier(0.22, 0.61, 0.36, 1),
+    box-shadow 0.18s ease,
+    border-color 0.18s ease;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  border-color: var(--trail);
+  box-shadow: 0 6px 18px rgba(22, 35, 29, 0.08);
+}
+
+.card:active { transform: translateY(0); }
+
+.btn:active { transform: scale(0.97); }
+
+.more {
+  transition: color 0.15s ease, transform 0.15s ease;
+  display: inline-block;
+}
+
+.more:hover { transform: translateX(2px); }
+
+.rating { transition: color 0.15s ease; }
+
+.hero__art path {
+  stroke-dasharray: 600;
+  stroke-dashoffset: 600;
+  animation: route-draw 1.6s cubic-bezier(0.22, 0.61, 0.36, 1) 0.2s forwards;
+}
+
+.hero__art circle {
+  opacity: 0;
+  animation: route-dot 0.4s ease forwards;
+}
+
+.hero__art circle:first-of-type { animation-delay: 0.3s; }
+.hero__art circle:last-of-type { animation-delay: 1.6s; }
+
+@keyframes route-draw {
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes route-dot {
+  to { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__art path { animation: none; stroke-dashoffset: 0; }
+  .hero__art circle { animation: none; opacity: 1; }
+  .card,
+  .btn,
+  .more { transition: none; }
+}
+
+/* ---------- Motion: form spinner + status ---------- */
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.btn-spinner {
+  width: 12px;
+  height: 12px;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  border-top-color: #fff;
+  border-radius: 999px;
+  animation: spin 0.7s linear infinite;
+}
+
+.newsletter-form button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.newsletter-form input:disabled { opacity: 0.6; }
+
+@keyframes status-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.form-status--anim { animation: status-in 0.25s ease; }

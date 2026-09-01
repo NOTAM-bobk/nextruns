@@ -1,4 +1,6 @@
 import { getAllItems, getAllCategories } from "@/lib/content";
+import CardGrid from "../components/CardGrid";
+import Reveal from "../components/Reveal";
 
 export const metadata = {
   title: "Gear Reviews",
@@ -36,13 +38,15 @@ export default function GearIndex({ searchParams }) {
 
   return (
     <main className="wrap">
-      <div className="article-head">
-        <h1>Gear Reviews</h1>
-        <p style={{ color: "var(--ink-soft)", maxWidth: "56ch" }}>
-          Real testing, real mileage. Shoes, watches, and hydration gear —
-          reviewed for what actually matters on the run.
-        </p>
-      </div>
+      <Reveal>
+        <div className="article-head">
+          <h1>Gear Reviews</h1>
+          <p style={{ color: "var(--ink-soft)", maxWidth: "56ch" }}>
+            Real testing, real mileage. Shoes, watches, and hydration gear —
+            reviewed for what actually matters on the run.
+          </p>
+        </div>
+      </Reveal>
 
       <div className="filter-bar">
         <a href="/gear" className={`tag ${!activeCategory ? "is-active" : ""}`}>All</a>
@@ -57,11 +61,11 @@ export default function GearIndex({ searchParams }) {
         ))}
       </div>
 
-      <div className="grid grid-3" style={{ paddingBottom: 64 }}>
+      <CardGrid style={{ paddingBottom: 64 }}>
         {gear.map((item) => (
           <GearCard key={item.slug} item={item} />
         ))}
-      </div>
+      </CardGrid>
     </main>
   );
 }

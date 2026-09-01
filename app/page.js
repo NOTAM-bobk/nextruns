@@ -1,5 +1,7 @@
 import { getAllItems, getTrending } from "@/lib/content";
 import NewsletterForm from "./components/NewsletterForm";
+import Reveal from "./components/Reveal";
+import CardGrid from "./components/CardGrid";
 
 function formatDate(d) {
   if (!d) return "";
@@ -70,9 +72,9 @@ export default function Home() {
         <div>
           <h1>Run more, guess less.</h1>
           <p>
-            Straightforward training advice, honest gear reviews, and race
-            prep that skips the hype — for runners who'd rather be out the
-            door than deep in a forum thread.
+            Training advice that survives contact with a real week, gear
+            reviews written after the miles, not the press release — and no
+            hype in either.
           </p>
           <div className="hero__actions">
             <a href="/blog" className="btn btn-primary">Read the blog</a>
@@ -112,11 +114,11 @@ export default function Home() {
             <h2>Trending now</h2>
             <a href="/blog?trending=1" className="more">See all trending →</a>
           </div>
-          <div className="grid grid-3">
+          <CardGrid>
             {trending.map((item) => (
               <TrendingCard key={`${item.type}-${item.slug}`} item={item} />
             ))}
-          </div>
+          </CardGrid>
         </section>
       )}
 
@@ -125,11 +127,11 @@ export default function Home() {
           <h2>Latest from the blog</h2>
           <a href="/blog" className="more">View all posts →</a>
         </div>
-        <div className="grid grid-3">
+        <CardGrid>
           {posts.map((post) => (
             <PostCard key={post.slug} post={post} />
           ))}
-        </div>
+        </CardGrid>
       </section>
 
       <section className="section">
@@ -137,24 +139,26 @@ export default function Home() {
           <h2>Gear we're testing</h2>
           <a href="/gear" className="more">View all reviews →</a>
         </div>
-        <div className="grid grid-3">
+        <CardGrid>
           {gear.map((item) => (
             <GearCard key={item.slug} item={item} />
           ))}
-        </div>
+        </CardGrid>
       </section>
 
-      <section className="section" style={{ borderTop: "none", paddingTop: 0 }}>
-        <div className="newsletter">
-          <div>
-            <h2>Don't miss the next one</h2>
-            <p>Weekly training tips and new gear reviews, straight to your inbox.</p>
+      <Reveal>
+        <section className="section" style={{ borderTop: "none", paddingTop: 0 }}>
+          <div className="newsletter">
+            <div>
+              <h2>Don't miss the next one</h2>
+              <p>Weekly training tips and new gear reviews, straight to your inbox.</p>
+            </div>
+            <div>
+              <NewsletterForm />
+            </div>
           </div>
-          <div>
-            <NewsletterForm />
-          </div>
-        </div>
-      </section>
+        </section>
+      </Reveal>
     </main>
   );
 }

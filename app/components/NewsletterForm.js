@@ -44,18 +44,26 @@ export default function NewsletterForm({ compact = false }) {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           aria-label="Email address"
+          disabled={status === "loading"}
         />
         <button type="submit" disabled={status === "loading"}>
-          {status === "loading" ? "Joining…" : "Join the list"}
+          {status === "loading" ? (
+            <>
+              <span className="btn-spinner" aria-hidden="true" />
+              Joining…
+            </>
+          ) : (
+            "Join the list"
+          )}
         </button>
       </form>
       {status === "ok" && (
-        <p className={`form-status ok ${compact ? "form-status--light" : ""}`}>
+        <p className={`form-status ok form-status--anim ${compact ? "form-status--light" : ""}`}>
           {message}
         </p>
       )}
       {status === "err" && (
-        <p className={`form-status err ${compact ? "form-status--light" : ""}`}>
+        <p className={`form-status err form-status--anim ${compact ? "form-status--light" : ""}`}>
           {message}
         </p>
       )}

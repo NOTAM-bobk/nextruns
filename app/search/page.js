@@ -3,6 +3,7 @@
 import { Suspense, useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import Fuse from "fuse.js";
+import { SkeletonGrid } from "../components/CardSkeleton";
 
 function ResultCard({ item }) {
   const href = `/${item.type === "posts" ? "blog" : "gear"}/${item.slug}`;
@@ -75,7 +76,7 @@ function SearchInner() {
         />
       </form>
 
-      {!loaded && <p className="search-empty">Loading…</p>}
+      {!loaded && <SkeletonGrid count={6} />}
 
       {loaded && results.length === 0 && (
         <p className="search-empty">
@@ -98,7 +99,16 @@ function SearchInner() {
 
 export default function SearchPage() {
   return (
-    <Suspense fallback={<main className="wrap"><p style={{ padding: "48px 0" }}>Loading…</p></main>}>
+    <Suspense
+      fallback={
+        <main className="wrap">
+          <div className="article-head">
+            <h1>Search</h1>
+          </div>
+          <SkeletonGrid count={6} />
+        </main>
+      }
+    >
       <SearchInner />
     </Suspense>
   );

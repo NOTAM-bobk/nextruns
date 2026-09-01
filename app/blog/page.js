@@ -1,4 +1,6 @@
 import { getAllItems, getAllTags } from "@/lib/content";
+import CardGrid from "../components/CardGrid";
+import Reveal from "../components/Reveal";
 
 export const metadata = {
   title: "Blog",
@@ -46,13 +48,15 @@ export default function BlogIndex({ searchParams }) {
 
   return (
     <main className="wrap">
-      <div className="article-head">
-        <h1>The Blog</h1>
-        <p style={{ color: "var(--ink-soft)", maxWidth: "56ch" }}>
-          Training plans, race-day prep, and the occasional myth-busting —
-          written for runners training around real jobs and real schedules.
-        </p>
-      </div>
+      <Reveal>
+        <div className="article-head">
+          <h1>The Blog</h1>
+          <p style={{ color: "var(--ink-soft)", maxWidth: "56ch" }}>
+            Training plans, race-day prep, and the occasional myth-busting —
+            written for runners training around real jobs and real schedules.
+          </p>
+        </div>
+      </Reveal>
 
       <div className="filter-bar">
         <a href="/blog" className={`tag ${!activeTag && !trendingOnly ? "is-active" : ""}`}>All</a>
@@ -71,11 +75,11 @@ export default function BlogIndex({ searchParams }) {
       {posts.length === 0 ? (
         <p className="search-empty">No posts match that filter yet.</p>
       ) : (
-        <div className="grid grid-3" style={{ paddingBottom: 64 }}>
+        <CardGrid style={{ paddingBottom: 64 }}>
           {posts.map((post) => (
             <PostCard key={post.slug} post={post} />
           ))}
-        </div>
+        </CardGrid>
       )}
     </main>
   );
